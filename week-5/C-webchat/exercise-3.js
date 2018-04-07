@@ -40,21 +40,25 @@ Task 4
 Use the setInterval function to reload automatically the messages of your webchat every 2 seconds.
 The code responsible to show the messages in the page is in exercise-1.js, so you will need to write your code there :-)
 */
+loadMessages();
 
-setInterval(callback, 100);
-fetch("https://codeyourfuture.herokuapp.com/api/messages")
-  .then(function(response) {
-    return response.text();
-  })
-  .then(function(messagesText) {
-    // console.log(messages);
-    var messageList = document.querySelector("#message-list");
-    // JSON.parse just converts the response to an array of message objects
-    var messages = JSON.parse(messagesText);
+setInterval(loadMessages, 2000);
 
-    messages.forEach(function(message) {
-      var newParagraph = document.createElement("p");
-      newParagraph.innerText = message.content;
-      messageList.appendChild(newParagraph);
+function loadMessages() {
+  fetch("https://codeyourfuture.herokuapp.com/api/messages")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(messages) {
+      // console.log(messages);
+      var messageList = document.querySelector("#message-list");
+      // JSON.parse just converts the response to an array of message objects
+      // var messages = JSON.parse(messagesText);
+
+      messages.forEach(function(message) {
+        var newParagraph = document.createElement("p");
+        newParagraph.innerText = message.content;
+        messageList.appendChild(newParagraph);
+      });
     });
-  });
+}

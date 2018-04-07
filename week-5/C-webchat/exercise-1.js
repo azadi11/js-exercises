@@ -36,12 +36,13 @@ When you open index.html in your browser, it should display the existing message
 // Write your code here
 fetch("https://codeyourfuture.herokuapp.com/api/messages")
   .then(function(response) {
-    return response.text();
+    return response.json();
   })
-  .then(function(messagesText) {
+  .then(function(messages) {
     // console.log(messages);
     var messageList = document.querySelector("#message-list");
-    var messages = JSON.parse(messagesText);
+    // JSON.parse just converts the response to an array of message objects
+    // var messages = JSON.parse(messagesText);
 
     messages.forEach(function(message) {
       var newParagraph = document.createElement("p");
